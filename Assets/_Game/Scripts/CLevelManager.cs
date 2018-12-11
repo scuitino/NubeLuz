@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CLevelManager : MonoBehaviour {
 
@@ -18,22 +19,70 @@ public class CLevelManager : MonoBehaviour {
             Destroy(gameObject);
     }
 
+    [SerializeField, Header("Panels")]
+    GameObject _resultPanel;
+
+    // placeholder
+    [SerializeField]
+    int _actualLevel;
+
+    [SerializeField]
+    int _nextScene;
+
     [SerializeField, Header("Art and Particles")]
     List<Image> _starsImages;
 
     [SerializeField]
     Sprite _collectedStarSprite;
 
-    [SerializeField]
-    List<GameObject> _collectStarParticle;
+    //[SerializeField]
+    //List<GameObject> _collectStarParticle;
 
-    int _collectedStarsCount;
+    [SerializeField, Header("Collectibles")]
+    List<bool> _collectedStars;
+
+    private void Start()
+    {
+        for (int i = 0; i < _collectedStars.Count; i++)
+        {
+            _collectedStars[i] = false;
+        }
+    }
 
     // each time the player collect an star
     public void AddStar(int aStarNumber)
     {
         //_collectStarParticle[aStarNumber].SetActive(true);
         _starsImages[aStarNumber].sprite = _collectedStarSprite;
-        _collectedStarsCount++;
+        _collectedStars[aStarNumber] = true;
+    }
+
+    // return stars result
+    public List<bool> GetCollectedStars()
+    {
+        return _collectedStars;
+    }
+
+    // pause the game
+    public void FinishGame()
+    {
+        Time.timeScale = 0;
+        _resultPanel.SetActive(true);
+    }
+
+    // unpause the game
+    public void GoNextScene()
+    {
+        Time.timeScale = 1;
+        _resultPanel.SetActive(false);
+        SceneManager.LoadScene(_nextScene);
+    }
+
+    // restart Level
+    public void RestartScene()
+    {
+        Time.timeScale = 1;
+        _resultPanel.SetActive(false);
+        SceneManager.LoadScene(_actualLevel);
     }
 }
