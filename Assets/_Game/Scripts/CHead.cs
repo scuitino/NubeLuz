@@ -46,13 +46,30 @@ public class CHead : MonoBehaviour {
     Transform _bloodDripping;
 
     [SerializeField, Header("Sounds")]
-    List<AudioClip> _SFX;
+    AudioSource _explosionSound;
+
+    [SerializeField]
+    AudioClip _spawnHeadSound;
+
+    [SerializeField]
+    List<AudioClip> _goreSounds;
+
+    int _lastGoreSoundPlayed;
+
+    [SerializeField]
+    float _goreSoundDelay;
+    
+    float _goreSoundTimer;
 
     AudioSource _headASource;
 
     private void Start()
     {
         _headASource = this.GetComponent<AudioSource>();
+        _goreSoundTimer = 50; // always  play the first sound
+
+        _headASource.clip = _spawnHeadSound;
+        _headASource.Play();
     }
 
     private void Update()
@@ -63,14 +80,18 @@ public class CHead : MonoBehaviour {
         // update second target position when head is active
         CThrowController._instance._secondCameraTarget.transform.position = this.transform.position;
 
-        // decrese remember timers
+        // decrese timers
         _pressButtonRemember -= Time.deltaTime;
         _lastFloorRemember -= Time.deltaTime;
+        _goreSoundTimer += Time.deltaTime;
     }
 
     // when the head touch something
     private void OnCollisionEnter2D(Collision2D collision)
-    {        
+    {
+        // gore sounds when touches something
+        PlayGoreSound();
+
         if ((_safeFloorLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer) // if the head touch a safe floor layer object
         {
             if (CheckSafeFloor()) // check safe floor
@@ -90,6 +111,27 @@ public class CHead : MonoBehaviour {
         {
             StartCoroutine(Die()); // die motherfucker
         }
+    }
+
+    // play a random gore sound
+    public void PlayGoreSound()
+    {
+        // select random sound
+        int tSelectedGoreSound = Random.Range(0, _goreSounds.Count);
+        if (_lastGoreSoundPlayed != tSelectedGoreSound)
+        {
+            _lastGoreSoundPlayed = tSelectedGoreSound;
+            if (_goreSoundTimer >= _goreSoundDelay)
+            {
+                _headASource.clip = _goreSounds[_lastGoreSoundPlayed];
+                _headASource.Play();
+            }
+        }
+        else
+        {
+            PlayGoreSound(); // chose a new one
+        }
+        _goreSoundTimer = 0;
     }
 
     // when player touch 
@@ -144,8 +186,7 @@ public class CHead : MonoBehaviour {
         this.GetComponentInChildren<SpriteRenderer>().enabled = false;
         _flyingParticle.SetActive(false);
         _deadParticle.SetActive(true);
-        _headASource.clip = _SFX[0];
-        _headASource.Play();
+        _explosionSound.Play();
         yield return new WaitForSeconds(_deathRespawnDelay);
 
         if (CPlayer._instance._bodyIsSafe) // if the body is safe
