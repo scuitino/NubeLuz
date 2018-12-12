@@ -35,7 +35,15 @@ public class CHead : MonoBehaviour {
 
     // sprites and stuff
     [SerializeField, Header("Art")]
-    SpriteRenderer _headSprite;
+    SpriteRenderer _headSpriteRenderer;
+
+    [SerializeField]
+    SpriteRenderer _faceSpriteRenderer;
+
+    [SerializeField]
+    Sprite _hurtFace, _flyindFace;
+
+    IEnumerator _hurtAnimationCoroutine;
 
     // particles
     [SerializeField, Header("Particles")]
@@ -70,6 +78,11 @@ public class CHead : MonoBehaviour {
 
         _headASource.clip = _spawnHeadSound;
         _headASource.Play();
+
+        // set default face
+        _faceSpriteRenderer.sprite = _flyindFace;
+        // face animations coroutines
+        _hurtAnimationCoroutine = HurtFaceCoroutine();
     }
 
     private void Update()
@@ -91,6 +104,10 @@ public class CHead : MonoBehaviour {
     {
         // gore sounds when touches something
         PlayGoreSound();
+
+        // animate face on collisions        
+        StopCoroutine(_hurtAnimationCoroutine);
+        StartCoroutine(_hurtAnimationCoroutine);
 
         if ((_safeFloorLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer) // if the head touch a safe floor layer object
         {
@@ -132,6 +149,14 @@ public class CHead : MonoBehaviour {
             PlayGoreSound(); // chose a new one
         }
         _goreSoundTimer = 0;
+    }
+
+    // hurt face emotion
+    public IEnumerator HurtFaceCoroutine()
+    {
+        _faceSpriteRenderer.sprite = _hurtFace;
+        yield return new WaitForSeconds(0.5f);
+        _faceSpriteRenderer.sprite = _flyindFace;
     }
 
     // when player touch 
@@ -208,7 +233,8 @@ public class CHead : MonoBehaviour {
     {
         if (aOrientation == -1)
         {
-            _headSprite.flipY = true;
+            _headSpriteRenderer.flipY = true;
+            _faceSpriteRenderer.flipY = true;
             _bloodDripping.localPosition = new Vector3(_bloodDripping.localPosition.x, -_bloodDripping.localPosition.y, _bloodDripping.localPosition.z);
         }
     }

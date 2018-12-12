@@ -66,6 +66,9 @@ public class CThrowController : MonoBehaviour {
     [SerializeField]
     LayerMask _cancelZoneLayer;
 
+    [SerializeField]
+    GameObject _disableTouchPanel;
+
     private void Awake()
     {
         //singleton check
@@ -82,7 +85,7 @@ public class CThrowController : MonoBehaviour {
         CreateLongPressGesture();
 
         // put camera on position
-        Invoke("ReturnCamera",3);
+        StartCoroutine(ShowPortal());
 
         // show touches, only do this for debugging as it can interfere with other canvases
         //FingersScript.Instance.ShowTouches = true;
@@ -91,6 +94,15 @@ public class CThrowController : MonoBehaviour {
     private void Update()
     {
         CameraStatesUpdate();
+    }
+
+    public IEnumerator ShowPortal()
+    {
+        yield return new WaitForSeconds(2);
+        ReturnCamera();
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log("Ready to play");
+        _disableTouchPanel.SetActive(false);
     }
 
     // camera states Updates
