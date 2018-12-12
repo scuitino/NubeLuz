@@ -6010,29 +6010,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114627575608044952, guid: e44fd11fba2679044b601a4821977223,
-        type: 2}
-      propertyPath: _headSpriteRenderer
-      value: 
-      objectReference: {fileID: 1866782023}
-    - target: {fileID: 50119644027222472, guid: e44fd11fba2679044b601a4821977223,
-        type: 2}
-      propertyPath: m_Constraints
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 212045589302705346, guid: e44fd11fba2679044b601a4821977223,
-        type: 2}
-      propertyPath: m_FlipX
+    - target: {fileID: 1220994944156564, guid: e44fd11fba2679044b601a4821977223, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e44fd11fba2679044b601a4821977223, type: 2}
   m_IsPrefabAsset: 0
---- !u!212 &1866782023 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 212045589302705346, guid: e44fd11fba2679044b601a4821977223,
-    type: 2}
-  m_PrefabInternal: {fileID: 1866782022}
 --- !u!1 &1867330775
 GameObject:
   m_ObjectHideFlags: 0
