@@ -16,7 +16,7 @@ public class CEnemy : MonoBehaviour {
         }
         else
         {
-            _artObjects.transform.localScale = new Vector3(-1, 1, 1);
+            _artObjects.transform.localScale = new Vector3(1, 1, 1);
         }
     }
 }
