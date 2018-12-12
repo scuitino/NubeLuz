@@ -12,6 +12,20 @@ public class CPlayer : MonoBehaviour {
     [SerializeField, Header("Gameplay")]
     float _moveSpeed;
 
+    public enum PlayerState
+    {
+        IDLE,
+        FALLING,
+        TARGETING,
+        WAITING,
+        BODY_DEAD,
+        SPAWNING, //  when successfull spawn
+        CHECKPOINT_RESPAWNING // when player and head both dead
+    }
+
+    [SerializeField]
+    PlayerState _state;
+
     [SerializeField]
     Rigidbody2D _playerRB;
 
@@ -47,19 +61,8 @@ public class CPlayer : MonoBehaviour {
     [SerializeField]
     GameObject _deathParticlePrefab;
 
-    public enum PlayerState
-    {
-        IDLE,
-        FALLING,
-        TARGETING,
-        WAITING,
-        BODY_DEAD,
-        SPAWNING, //  when successfull spawn
-        CHECKPOINT_RESPAWNING // when player and head both dead
-    }
-
-    [SerializeField]
-    PlayerState _state;
+    [SerializeField, Header("Animations")]
+    Animator _bodyAnimator;    
 
     public PlayerState GetState()
     {
@@ -143,6 +146,10 @@ public class CPlayer : MonoBehaviour {
         }
         else if (_state == PlayerState.WAITING)
         {
+            // animation
+            _bodyAnimator.SetTrigger("Hurt");
+
+            // particles
             _headSprite.SetActive(false);
             _shotParticle.SetActive(true);
             _noHeadParticle.SetActive(true);
