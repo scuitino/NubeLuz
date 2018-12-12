@@ -83,9 +83,7 @@ public class CHead : MonoBehaviour {
         _headASource.Play();
 
         // set default face
-        _faceSpriteRenderer.sprite = _flyindFace;
-        // face animations coroutines
-        _hurtAnimationCoroutine = HurtFaceCoroutine();
+        _faceSpriteRenderer.sprite = _flyindFace;        
     }
 
     private void Update()
@@ -109,6 +107,11 @@ public class CHead : MonoBehaviour {
         PlayGoreSound();
 
         // animate face on collisions        
+        if (_hurtAnimationCoroutine != null)
+        {
+            StopCoroutine(_hurtAnimationCoroutine);
+        }        
+        _hurtAnimationCoroutine = HurtFaceCoroutine();
         StartCoroutine(_hurtAnimationCoroutine);
 
         if ((_safeFloorLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer) // if the head touch a safe floor layer object
@@ -157,7 +160,7 @@ public class CHead : MonoBehaviour {
     public IEnumerator HurtFaceCoroutine()
     {
         _faceSpriteRenderer.sprite = _hurtFace;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.8f);
         _faceSpriteRenderer.sprite = _flyindFace;
     }
 
