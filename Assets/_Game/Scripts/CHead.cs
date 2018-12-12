@@ -41,6 +41,9 @@ public class CHead : MonoBehaviour {
     SpriteRenderer _faceSpriteRenderer;
 
     [SerializeField]
+    Vector3 _flipFacePosition;
+
+    [SerializeField]
     Sprite _hurtFace, _flyindFace;
 
     IEnumerator _hurtAnimationCoroutine;
@@ -106,7 +109,6 @@ public class CHead : MonoBehaviour {
         PlayGoreSound();
 
         // animate face on collisions        
-        StopCoroutine(_hurtAnimationCoroutine);
         StartCoroutine(_hurtAnimationCoroutine);
 
         if ((_safeFloorLayer & 1 << collision.gameObject.layer) == 1 << collision.gameObject.layer) // if the head touch a safe floor layer object
@@ -208,7 +210,8 @@ public class CHead : MonoBehaviour {
     {
         Debug.Log("You are dead!");
         this.GetComponent<Rigidbody2D>().simulated = false;
-        this.GetComponentInChildren<SpriteRenderer>().enabled = false;
+        _headSpriteRenderer.enabled = false;
+        _faceSpriteRenderer.enabled = false;
         _flyingParticle.SetActive(false);
         _deadParticle.SetActive(true);
         _explosionSound.Play();
@@ -235,6 +238,7 @@ public class CHead : MonoBehaviour {
         {
             _headSpriteRenderer.flipY = true;
             _faceSpriteRenderer.flipY = true;
+            _faceSpriteRenderer.transform.localPosition = _flipFacePosition;
             _bloodDripping.localPosition = new Vector3(_bloodDripping.localPosition.x, -_bloodDripping.localPosition.y, _bloodDripping.localPosition.z);
         }
     }
