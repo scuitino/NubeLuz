@@ -82,7 +82,7 @@ public class CThrowController : MonoBehaviour {
         CreateLongPressGesture();
 
         // put camera on position
-        ReturnCamera();
+        Invoke("ReturnCamera",3);
 
         // show touches, only do this for debugging as it can interfere with other canvases
         //FingersScript.Instance.ShowTouches = true;
