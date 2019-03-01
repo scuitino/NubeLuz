@@ -25,7 +25,6 @@ public class CLevelManager : MonoBehaviour {
     // placeholder
     [SerializeField]
     int _actualLevel;
-
     [SerializeField]
     int _nextScene;
 
@@ -34,9 +33,6 @@ public class CLevelManager : MonoBehaviour {
 
     [SerializeField]
     Sprite _collectedStarSprite;
-
-    //[SerializeField]
-    //List<GameObject> _collectStarParticle;
 
     [SerializeField, Header("Collectibles")]
     List<bool> _collectedStars;
@@ -52,7 +48,6 @@ public class CLevelManager : MonoBehaviour {
     // each time the player collect an star
     public void AddStar(int aStarNumber)
     {
-        //_collectStarParticle[aStarNumber].SetActive(true);
         _starsImages[aStarNumber].sprite = _collectedStarSprite;
         _collectedStars[aStarNumber] = true;
     }

@@ -11,10 +11,9 @@ public class CThrowController : MonoBehaviour {
     public static CThrowController _instance = null;
     #endregion
         
-    // delay before return to player position when is no touching
+    // control delay before return to player position when is no touching
     [SerializeField, Header("Camera Config")]
     float _delayBeforeCameraReturn;
-
     [SerializeField]
     float _cameraReturnTimer;
 

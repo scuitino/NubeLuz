@@ -3884,6 +3884,26 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114435374978320720, guid: ad0f087a388ac7742977dcc61600d08e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1623205875}
+    - target: {fileID: 114435374978320720, guid: ad0f087a388ac7742977dcc61600d08e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RestartScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 114714992397611248, guid: ad0f087a388ac7742977dcc61600d08e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1623205875}
+    - target: {fileID: 114714992397611248, guid: ad0f087a388ac7742977dcc61600d08e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoNextScene
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad0f087a388ac7742977dcc61600d08e, type: 2}
   m_IsPrefabAsset: 0
